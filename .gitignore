@@ -1,27 +1,17 @@
 # macOS
 .DS_Store
 
-# Node / React Native
+# React Native / Node
 node_modules/
 .expo/
 dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Android / Gradle
-.gradle/
-build/
-**/build/
-local.properties
-
-# Android Studio / IntelliJ
-.idea/
-*.iml
-
-# Kotlin / Java
-*.class
 
 # Environment files
 .env
-.env.*
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
