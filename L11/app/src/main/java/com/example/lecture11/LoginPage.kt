@@ -1,5 +1,8 @@
 package com.example.lecture11
 
+import android.Manifest
+import android.content.Context
+import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -110,6 +116,8 @@ fun UserBox(
     currentUser: FirebaseUser?,
     onSignOut: () -> Unit
 ){
+
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,8 +130,24 @@ fun UserBox(
             Button(onClick = { onSignOut() }) {
                 Text("Sign out")
             }
+            Button(onClick = { showNotification(context) }) {
+                Text("Send notification")
+            }
         } else {
             Text("Not signed in")
         }
     }
+}
+
+@RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+fun showNotification(context: Context){
+    val notification = NotificationCompat.Builder(context, "demo_channel")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setContentTitle("Hello")
+        .setContentText("This is a local notification")
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .build()
+
+    NotificationManagerCompat.from(context)
+        .notify(1, notification)
 }
