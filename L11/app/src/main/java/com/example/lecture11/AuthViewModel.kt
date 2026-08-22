@@ -10,17 +10,26 @@ import kotlinx.coroutines.flow.asStateFlow
 class AuthViewModel : ViewModel(){
 
     private val auth = FirebaseAuth.getInstance()
+    private val userRepo = UserRepository()
 
-    private val _currentUser = MutableStateFlow<FirebaseUser?>(auth.currentUser)
-    val currentUser = _currentUser.asStateFlow()
+    private val _user = MutableStateFlow<User?>(null)
+    val user = _user.asStateFlow()
+    private val _authUser = MutableStateFlow<FirebaseUser?>(auth.currentUser)
+    val authUser = _authUser.asStateFlow()
 
-    fun registerUser(email: String, password: String){
-        Log.d("AUTH", "Email: '$email'")
+    fun registerUser(email: String, name: String, password: String){
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
-                    _currentUser.value = auth.currentUser
-                    Log.d("AUTH", "User created: ${auth.currentUser?.email}")
+                    Log.d("AUTH", "User created: ${auth.currentUser?.uid}")
+
+                    userRepo.createUser(
+                        uid = auth.currentUser!!.uid,
+                        email = email,
+                        name = name
+                    ){
+                        loadCurrentUser()
+                    }
                 } else {
                     Log.e("AUTH", "Registration failed", task.exception)
                 }
@@ -31,16 +40,23 @@ class AuthViewModel : ViewModel(){
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
-                    _currentUser.value = auth.currentUser
-                    Log.d("AUTH", "Logged in: ${auth.currentUser?.email}")
+                    loadCurrentUser()
                 } else {
                     Log.e("AUTH", "Login failed", task.exception)
                 }
             }
     }
 
+    fun loadCurrentUser(){
+        _authUser.value = auth.currentUser
+        userRepo.getUser(_authUser.value!!.uid) { user ->
+            _user.value = user
+        }
+    }
+
     fun signOut() {
         auth.signOut()
-        _currentUser.value = auth.currentUser
+        _authUser.value = null
+        _user.value = null
     }
 }

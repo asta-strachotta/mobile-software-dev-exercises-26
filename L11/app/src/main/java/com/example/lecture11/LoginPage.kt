@@ -10,11 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,16 +25,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 @Composable
 fun LoginPage(modifier: Modifier = Modifier, authVM: AuthViewModel = viewModel()){
-    val currentUser by authVM.currentUser.collectAsStateWithLifecycle()
+    val currentUser by authVM.user.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -57,16 +55,28 @@ fun LoginPage(modifier: Modifier = Modifier, authVM: AuthViewModel = viewModel()
 @Composable
 fun LoginBox(
     onLogin: (String, String) -> Unit,
-    onRegister: (String, String) -> Unit
+    onRegister: (String, String, String) -> Unit
 ){
     var email by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var register by remember { mutableStateOf(true) }
     Column(
         Modifier
             .fillMaxWidth()
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(if (register) "Register" else "Login", fontSize = 16.sp)
+            Button(onClick = { register = !register}, colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+            ) {
+                Text(if (register) "Go to login" else "Go to register", color = Color.Blue)
+            }
+        }
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -78,6 +88,19 @@ fun LoginBox(
 
             ),
         )
+        if (register){
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Name") },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    focusedBorderColor = Color.Blue
+
+                ),
+            )
+        }
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -90,14 +113,18 @@ fun LoginBox(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             visualTransformation = PasswordVisualTransformation()
         )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Button(onClick = { onRegister(email.trim(), password) }) {
+        if (register){
+            Button(onClick = {
+                onRegister(email.trim(), name, password);
+                email = ""; name = ""; password = ""
+            }) {
                 Text("Register")
             }
-            Button(onClick = { onLogin(email.trim(), password) }) {
+        } else {
+            Button(onClick = {
+                onLogin(email.trim(), password);
+                email = ""; name = ""; password = ""
+            }) {
                 Text("Log in")
             }
         }
@@ -107,7 +134,7 @@ fun LoginBox(
 
 @Composable
 fun UserBox(
-    currentUser: FirebaseUser?,
+    currentUser: User?,
     onSignOut: () -> Unit
 ){
     Column(
@@ -118,7 +145,7 @@ fun UserBox(
             .padding(12.dp),
     ) {
         if (currentUser != null) {
-            Text("Current user: ${currentUser.email}")
+            Text("Current user: ${currentUser.name}")
             Button(onClick = { onSignOut() }) {
                 Text("Sign out")
             }
