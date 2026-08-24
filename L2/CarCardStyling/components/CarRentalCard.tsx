@@ -7,6 +7,10 @@ interface CardProps {
 }
 
 export default function CarRentalCard({image, model, rentalPrice}: CardProps) {
+    function handlePress() {
+        console.log("Car is now rented!");
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -19,7 +23,7 @@ export default function CarRentalCard({image, model, rentalPrice}: CardProps) {
                 <Text style={styles.information}>
                     Price pr. day: {rentalPrice} DKK
                 </Text>
-                <Pressable style={styles.button}>
+                <Pressable style={styles.button} onPress={handlePress}>
                     <Text style={styles.buttonText}>Rent now!</Text>
                 </Pressable>
             </View>
