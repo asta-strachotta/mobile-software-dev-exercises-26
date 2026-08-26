@@ -19,11 +19,11 @@ And [Android Studios](https://developer.android.com/studio) when working Kotlin 
 
 2. Navigate into the lecture and exercise you want to see
    ```bash
-   cd mobile-software-development-exercises
+   cd mobile-software-dev-exercises-26
    ```
    Such as the first exercise:
    ```bash
-   cd L1-Introduction-to-React-Native-and-Expo/Creating-a-new-Component
+   cd L2/CarList
    ```
 3.When running React Native exercises, remember to run :
  ```bash
