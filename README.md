@@ -3,7 +3,7 @@
 Welcome to the **Mobile Software Development Exercises** repository! This repository contains most of the exercises and examples from the lectures. Below you'll find instructions on how to set up and run the exercises.
 
 ## Structure
-On the ```main```branch you'll find the exercises with TODO's in the ```README.md``` file. On the ```solutions```branch, you'll find the solutions ... duh. Enjoy:)
+On the ```main```branch you'll find the exercises with TODO's in the ```App.tsx``` file. On the ```solutions```branch, you'll find the solutions ... duh. Enjoy:)
 
 ## Getting Started
 
