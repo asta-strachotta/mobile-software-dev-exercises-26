@@ -3,17 +3,7 @@
 Welcome to the **Mobile Software Development Exercises** repository! This repository contains most of the exercises and examples from the lectures. Below you'll find instructions on how to set up and run the exercises.
 
 ## Structure
-The general structure is as seen below, categorised into Lectures and then the exercise name as seen on the slides.
-
-- **Lecture1**
-  - Exercise 1
-  - Example 1
-
-- **Lecture2**
-  - Exercise 1
-  - Exercise 2
-  - Exercise 3
-
+On the ```main```branch you'll find the exercises with TODO's in the ```README.md``` file. On the ```solutions```branch, you'll find the solutions ... duh. Enjoy:)
 
 ## Getting Started
 
