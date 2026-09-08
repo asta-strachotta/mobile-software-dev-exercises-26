@@ -1,4 +1,3 @@
-import {StatusBar} from 'expo-status-bar';
 import {FlatList, StyleSheet, View} from 'react-native';
 import CarItem from "./components/CarItem";
 
@@ -15,7 +14,6 @@ export default function App() {
                 renderItem={({item}) =>
                     <CarItem type={item.type} mileage={item.mileage} price={item.price}/>}
             />
-            <StatusBar style="auto"/>
         </View>
     );
 }
@@ -26,6 +24,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 500,
+        paddingTop: 200,
     },
 });
