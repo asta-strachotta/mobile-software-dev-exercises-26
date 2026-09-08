@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {NavigationContainer} from "@react-navigation/native";
+import Screen1 from "./screens/Screen1";
+import Screen2 from "./screens/Screen2";
+import Screen3 from "./screens/Screen3";
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {RootStackParamList} from "./navigation/types";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    const Stack = createNativeStackNavigator<RootStackParamList>();
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Screen1">
+                <Stack.Screen name={"Screen1"} component={Screen1}/>
+                <Stack.Screen name={"Screen2"} component={Screen2}/>
+                <Stack.Screen name={"Screen3"} component={Screen3}/>
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
