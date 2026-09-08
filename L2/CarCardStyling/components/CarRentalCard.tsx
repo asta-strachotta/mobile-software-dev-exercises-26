@@ -1,4 +1,4 @@
-import {View, Image, StyleSheet, Text, Pressable, Button} from "react-native";
+import {View, Image, StyleSheet, Text, Pressable} from "react-native";
 
 interface CardProps {
     image: string;
@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
         backgroundColor: '#24ca00',
-        borderColor: '#24ca00',
         borderRadius: 10,
         padding: 10,
     },
