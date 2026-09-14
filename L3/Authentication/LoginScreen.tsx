@@ -25,20 +25,22 @@ export default function LoginScreen() {
             />
 
             {/* TODO: Add login Button */}
-            <Pressable
-                style={styles.loginButton}
-                onPress={() => login(username)}
-            >
-                <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
-
-            {/* TODO: Add logout Button */}
-            <Pressable style={styles.logoutButton} onPress={() => {
-                logout();
-                setUsername("");
-            }}>
-                <Text style={styles.buttonText}>Logout</Text>
-            </Pressable>
+            {!user ?
+                <Pressable
+                    style={styles.loginButton}
+                    onPress={() => login(username)}
+                >
+                    <Text style={styles.buttonText}>Login</Text>
+                </Pressable>
+                :
+                // TODO: Add logout Button
+                <Pressable style={styles.logoutButton} onPress={() => {
+                    logout();
+                    setUsername("");
+                }}>
+                    <Text style={styles.buttonText}>Logout</Text>
+                </Pressable>
+            }
         </View>
     );
 }
