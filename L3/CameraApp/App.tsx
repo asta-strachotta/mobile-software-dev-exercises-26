@@ -12,13 +12,6 @@ export default function App() {
     const [flashMode, setFlashMode] = useState<FlashMode>("off");
     const cameraRef = useRef<CameraView>(null);
 
-    useEffect(() => {
-        (async () => {
-            const camPermission = await requestPermission();
-            console.log(`Camera permission: ${camPermission.status}`);
-        })();
-    }, []);
-
     if (!status) {
         return <ActivityIndicator/>;
     }
