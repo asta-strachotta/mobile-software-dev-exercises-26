@@ -15,14 +15,12 @@ class AuthViewModel : ViewModel(){
     private val _user = MutableStateFlow<User?>(null)
     val user = _user.asStateFlow()
     private val _authUser = MutableStateFlow<FirebaseUser?>(auth.currentUser)
-    val authUser = _authUser.asStateFlow()
 
     fun registerUser(email: String, name: String, password: String){
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful){
                     Log.d("AUTH", "User created: ${auth.currentUser?.uid}")
-
                     userRepo.createUser(
                         uid = auth.currentUser!!.uid,
                         email = email,

@@ -71,7 +71,7 @@ fun LoginBox(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(if (register) "Register" else "Login", fontSize = 16.sp)
+            Text(if (register) "Register" else "Login", fontSize = 24.sp)
             Button(onClick = { register = !register}, colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
             ) {
                 Text(if (register) "Go to login" else "Go to register", color = Color.Blue)
