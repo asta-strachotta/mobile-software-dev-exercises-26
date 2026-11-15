@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.notificationsexample.ui.theme.NotificationsExampleTheme
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -117,7 +118,7 @@ fun showNotification(
     ){
         return // Could be made to request permissions again
     }
-    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+    val notification = NotificationCompat.Builder(context, "messages")
         .setSmallIcon(android.R.drawable.ic_dialog_email)
         .setContentTitle(title)
         .setContentText(message)
